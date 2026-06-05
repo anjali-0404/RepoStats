@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,7 +22,7 @@ export const metadata = {
     default: "GitHub Repo Contribution Analytics - Repository Insights & Statistics | by 152",
     template: "%s | GitHub Contribution Analytics"
   },
-  description: "Analyze GitHub repository contributions with detailed insights. View contributor statistics, merged pull requests, commit history, and comprehensive analytics for any GitHub repository.",
+  description: "Analyze GitHub repositories with contributor insights, merged PR statistics, contribution trends, and interactive analytics.",
   
   // Open Graph / Social Media Metadata
   openGraph: {
@@ -132,26 +133,28 @@ export const metadata = {
   category: "developer tools",
   
   // Color Scheme
-  colorScheme: "dark",
+  colorScheme: "dark light",
   
   // Theme Color
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0f172a" },
+    { media: "(prefers-color-scheme: light)", color: "#f9fafb" },
     { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
   ],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50 text-gray-900 dark:bg-gradient-to-br dark:from-gray-900 dark:via-black dark:to-gray-900 dark:text-white transition-colors duration-300`}
       >        
-        <Header/>
-        <main className="relative z-10">
-          {children}
-        </main>
-        <Footer/>
+        <ThemeProvider>
+          <Header/>
+          <main className="relative z-10">
+            {children}
+          </main>
+          <Footer/>
+        </ThemeProvider>
       </body>
     </html>
   );
